@@ -1,0 +1,126 @@
+@model Root
+
+<div>
+
+    <h1>@Model.name</h1>
+    @if (Model.poster != null && Model.poster.url != null)
+    {
+        <img src="@Model.poster.url" alt="@Model.name" />
+    }
+    else
+    {
+        <div>Постера нет</div>
+    }
+
+    <p>@Model.description</p>
+
+    <h2>Рейтинги</h2>
+<ul>
+    @if (Model.rating != null)
+    {
+        <li>Kinopoisk Рейтинг: @Model.rating.kp</li>
+        <li>IMDB Рейтинг: @Model.rating.imdb</li>
+        <li>Рейтинг кинокритиков: @Model.rating.filmCritics</li>
+        <li>Рейтинг кинокритиков из РФ: @Model.rating.russianFilmCritics</li>
+    }
+</ul>
+
+    <h2>Голоса</h2>
+    <ul>
+    @if (Model.votes != null)
+{
+<li>Kinopoisk Голоса: @Model.votes.kp</li>
+        <li>IMDB Голоса: @Model.votes.imdb</li>
+        <li>Голоса кинокритиков: @Model.votes.filmCritics</li>
+        <li>Голоса кинокритиков из РФ: @Model.votes.russianFilmCritics</li>
+}
+        
+    </ul>
+<h2>Информация о фильме</h2>
+<ul>
+    @if (Model.countries != null && Model.countries.Count > 0)
+    {
+        <li>Страна: @Model.countries[0].name</li>
+    }
+        <li>Год: @Model.year</li>
+        <li>Продолжительность: @Model.movieLength минут</li>
+        <li>Тип: @Model.type</li>
+
+</ul>
+  
+
+    <h2>Жанры</h2>
+<ul>
+    @if (Model.genres != null)
+    {
+        @foreach (var genre in Model.genres)
+        {
+            <li>@genre.name</li>
+        }
+    }
+</ul>
+
+<h2>Актеры:</h2>
+  <div id="actorsCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            @if (Model.persons != null)
+            {
+                for (var i = 0; i < Model.persons.Count; i++)
+                {
+                    var person = Model.persons[i];
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @if (!string.IsNullOrEmpty(person.photo))
+                                {
+                                    <img src="@person.photo" alt="@person.name" class="img-fluid" />
+                                }
+                                <h3>@person.name</h3>
+                                <p><strong>Профессия:</strong> @person.profession</p>
+                            </div>
+                            <div class="col-md-8">
+                                <p><strong>Описание:</strong> @person.description</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <a class="carousel-control-prev" href="#actorsCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#actorsCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <h2>Альтернативные названия</h2>
+<ul>
+    @if (Model.names != null)
+    {
+        @foreach (var name in Model.names)
+        {
+            <li>@name.name</li>
+        }
+    }
+</ul>
+
+    <h2>Краткое описание</h2>
+    <p>@Model.shortDescription</p>
+
+    <h2>Ссылка для просмотра</h2>
+@if (Model.watchability != null && Model.watchability.items != null && Model.watchability.items.Count > 0)
+{
+    <a href="@Model.watchability.items[0].url" target="_blank">@Model.watchability.items[0].name</a>
+}
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#actorsCarousel').carousel();
+        });
+    </script>
+}
