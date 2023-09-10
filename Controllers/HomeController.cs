@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ownpractice;
 using practice.Models;
 
 namespace practice.Controllers
@@ -20,6 +21,10 @@ namespace practice.Controllers
 
         public IActionResult Index()
         {
+            using (var db = new AppDbContext())
+            {
+                
+            }
             return View();
         }
 
