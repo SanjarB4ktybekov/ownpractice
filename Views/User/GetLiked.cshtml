@@ -1,0 +1,49 @@
+@using ownpractice
+@model GeneralViewModelList
+
+<!-- Вывод информации о фильмах на текущей странице -->
+
+@foreach (var movie in Model.generalViewModels)
+{
+    <h2>---------------</h2>
+    <div class="film-card">
+        <div class="film-details">
+            <a class="btn btn-info" asp-controller="Movie" asp-action="Detail" asp-route-externalId="@movie.kpId"  >@movie.Name</a>
+        </div>
+    </div>
+}
+
+<style>
+   /* Стили для карточки фильма */
+.film-card {
+    border: 3px solid #000000;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    background-color: rgb(220, 185, 45);
+}
+
+/* Центрирование всей информации о фильме */
+.film-details {
+    text-align: center;
+    max-width: 400px; /* Ширина блока с информацией, чтобы не было слишком широко */
+    margin: 0 auto;
+}
+
+/* Центрирование постера и рейтинга КиноПоиска */
+.film-details-content {
+    text-align: center;
+}
+
+/* Стили для постера */
+.film-details img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Стили для рейтинга КиноПоиска */
+.film-details p {
+    font-weight: bold;
+}
+
+</style>

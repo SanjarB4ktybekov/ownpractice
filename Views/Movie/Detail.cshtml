@@ -88,10 +88,30 @@
                 </div>
             </div>
         </div>
-        <h2>User Index = @Model.UserIndex</h2>
-        <a asp-controller="Recomendation" asp-action="AddToLiked" asp-route-id="@movie.externalId.kpHD" class="btn btn-info" >Добавить в любимое</a>
-        <a asp-controller="Recomendation" asp-action="AddToDisliked" asp-route-id="@movie.externalId.kpHD" class="btn btn-danger">Добавить в черный список</a>
-        <a asp-controller="Recomendation" asp-action="AddToFutureList" asp-route-id="@movie.externalId.kpHD" class="btn btn-success">Добавить в посмотреть позже</a>
+        @if (@Model.UserIndex == 0)
+        {
+            <h2>Вы еще не давали оценку этому произведению</h2>
+        }
+        @if (@Model.UserIndex == 1)
+        {
+            <h2>Вы отметили данное произведение как понравившееся</h2>
+        }
+        @if (@Model.UserIndex == 2)
+        {
+            <h2>Данное произведение в вашем черном списке</h2>
+        }
+        @if (@Model.UserIndex == 3)
+        {
+            <h2>Вы поместили это произведение в список посмотреть позже</h2>
+        }
+        <a asp-controller="Recomendation" asp-action="AddToLiked" asp-route-id="@movie.externalId.kpHD" asp-route-name="@movie.name"
+            class="btn btn-info">Добавить в любимое</a>
+        <a asp-controller="Recomendation" asp-action="AddToDisliked" asp-route-id="@movie.externalId.kpHD" asp-route-name="@movie.name"
+            class="btn btn-danger">Добавить в черный список</a>
+        <a asp-controller="Recomendation" asp-action="AddToFutureList" asp-route-id="@movie.externalId.kpHD" asp-route-name="@movie.name"
+            class="btn btn-success">Добавить в посмотреть позже</a>
+        <a asp-controller="Recomendation" asp-action="SetDefault" asp-route-id="@movie.externalId.kpHD" asp-route-name="@movie.name"
+            class="btn btn-secondary">Не оценивать</a>
 
     </div>
     <style>
