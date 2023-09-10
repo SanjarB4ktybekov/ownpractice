@@ -21,10 +21,6 @@ namespace practice.Controllers
 
         public IActionResult Index()
         {
-            using (var db = new AppDbContext())
-            {
-                
-            }
             return View();
         }
 

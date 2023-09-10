@@ -8,5 +8,7 @@ namespace practice
         public int CurrentPage { get; set; } // Номер текущей страницы
         public int TotalPages { get; set; } // Общее количество страниц
         public int ItemsPerPage { get; set; } // Количество элементов на странице
+        public int UserIndex { get; set; } // значение от 0 до 3 
+
     }
 }

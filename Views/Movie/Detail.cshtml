@@ -88,9 +88,10 @@
                 </div>
             </div>
         </div>
+        <h2>User Index = @Model.UserIndex</h2>
         <a asp-controller="Recomendation" asp-action="AddToLiked" asp-route-id="@movie.externalId.kpHD" class="btn btn-info" >Добавить в любимое</a>
-        <button asp-controller="Recomendation" asp-action="AddToDisliked" asp-route-id="" class="btn btn-danger">Добавить в черный список</button>
-        <button asp-controller="Recomendation" asp-action="AddToFutureList" asp-route-id="" class="btn btn-success">Добавить в посмотреть позже</button>
+        <a asp-controller="Recomendation" asp-action="AddToDisliked" asp-route-id="@movie.externalId.kpHD" class="btn btn-danger">Добавить в черный список</a>
+        <a asp-controller="Recomendation" asp-action="AddToFutureList" asp-route-id="@movie.externalId.kpHD" class="btn btn-success">Добавить в посмотреть позже</a>
 
     </div>
     <style>

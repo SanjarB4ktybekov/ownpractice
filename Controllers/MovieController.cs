@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ownpractice.Entities;
 using practice;
 
 namespace ownpractice.Controllers
@@ -23,14 +24,11 @@ namespace ownpractice.Controllers
         public async Task<IActionResult> Detail(string externalId)
         {// Создайте экземпляр HttpClient
             var httpClient = _httpClientFactory.CreateClient();
-
             // URL для API
             string anime = $"https://api.kinopoisk.dev/v1.3/movie?externalId.kpHD={externalId}";
-
-
             try
             {
-                httpClient.DefaultRequestHeaders.Add("X-API-KEY", "W2S5DKS-Z2YM9H5-JSJB4ZQ-G90JH0P");
+                httpClient.DefaultRequestHeaders.Add("X-API-KEY", "ANR36PC-PW64GSK-GZX6240-48D23V9");
                 HttpResponseMessage response = await httpClient.GetAsync(anime);
                 if (response.IsSuccessStatusCode)
                 {
@@ -42,6 +40,20 @@ namespace ownpractice.Controllers
 
                     // Используйте информацию о пагинации, которая уже приходит с сервиса
                     var movies = root.docs.ToList();
+                    int index = 0;
+
+                    using (var db = new AppDbContext())
+                    {
+                        var movie = db.Movies.FirstOrDefault(m => m.kpId == movies.FirstOrDefault().externalId.kpHD);
+                        if (movie == null)
+                        {
+                            db.Movies.Add(new _Movie { kpId = movies.FirstOrDefault().externalId.kpHD });
+                            db.SaveChanges();
+                        }
+                        index = db.Movies
+                                .FirstOrDefault(m => m.kpId == movies.FirstOrDefault().externalId.kpHD).userIndex;
+
+                    }
 
                     // Создайте объект ViewModel и передайте его в представление
                     var viewModel = new MovieViewModel
@@ -49,7 +61,8 @@ namespace ownpractice.Controllers
                         Movies = movies,
                         CurrentPage = 0,
                         TotalPages = 1,
-                        ItemsPerPage = 1
+                        ItemsPerPage = 1,
+                        UserIndex = index
                     };
                     return View(viewModel);
                 }

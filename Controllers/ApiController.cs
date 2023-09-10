@@ -29,10 +29,11 @@ namespace practice.Controllers
 
             // URL для API
             string anime = $"https://api.kinopoisk.dev/v1.3/movie?type=anime&page={page}&limit={pageSize}";
-
+            //ANR36PC-PW64GSK-GZX6240-48D23V9
+            //W2S5DKS-Z2YM9H5-JSJB4ZQ-G90JH0P
             try
             {
-                httpClient.DefaultRequestHeaders.Add("X-API-KEY", "W2S5DKS-Z2YM9H5-JSJB4ZQ-G90JH0P");
+                httpClient.DefaultRequestHeaders.Add("X-API-KEY", "ANR36PC-PW64GSK-GZX6240-48D23V9");
                 HttpResponseMessage response = await httpClient.GetAsync(anime);
                 if (response.IsSuccessStatusCode)
                 {
@@ -75,7 +76,7 @@ namespace practice.Controllers
                     System.Console.WriteLine(response.StatusCode);
                     System.Console.WriteLine(response.RequestMessage);
 
-                    return View("ErrorView");
+                    return View("Error");
                 }
             }
             catch (HttpRequestException e)

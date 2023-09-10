@@ -12,10 +12,10 @@ namespace ownpractice
     {
         public AppDbContext()
         {
-            Database.EnsureDeleted();
+            Database.EnsureCreated();
         }
-        public DbSet<DbMovie> dbMovies { get; set; }
-        public DbSet<UserList> userLists { get; set; }
+        public DbSet<_Movie> Movies { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
