@@ -9,9 +9,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">practice</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Сервис по рекомендациям</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,10 +19,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Главная страница</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Политика конфиденциальности</a>
                         </li>
                     </ul>
                 </div>
@@ -46,3 +46,19 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<style>
+    body {
+        background-color: #b76814; /* Цвет фона страницы */
+        color: white;
+    }
+    header {
+        background-color: rgb(51, 51, 51); /* Цвет фона хедера */
+        color: rgb(0, 0, 0); /* Цвет текста в хедере */
+        padding: 20px; /* Отступы внутри хедера, чтобы текст не был прижат к краям */
+    }
+
+    /* Пример стилей для навигационного меню в хедере */
+    nav {
+        background-color: rgb(51, 51, 51); /* Цвет фона навигационного меню */
+    }
+</style>
