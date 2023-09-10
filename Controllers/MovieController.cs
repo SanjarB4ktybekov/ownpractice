@@ -7,28 +7,26 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using practice;
 
-namespace practice.Controllers
+namespace ownpractice.Controllers
 {
-    [Route("[controller]")]
-    public class ApiController : Controller
+    [Route("Movie")]
+    public class MovieController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-
-        public ApiController(IHttpClientFactory httpClientFactory)
+        IHttpClientFactory _httpClientFactory;
+        public MovieController(IHttpClientFactory factory)
         {
-            _httpClientFactory = httpClientFactory;
+            _httpClientFactory = factory;
         }
-
-
-
-        public async Task<IActionResult> MakeApiRequest(int page = 1, int pageSize = 10)
-        {
-            // Создайте экземпляр HttpClient
+        [HttpGet("Detail/{externalId}")]
+        public async Task<IActionResult> Detail(string externalId)
+        {// Создайте экземпляр HttpClient
             var httpClient = _httpClientFactory.CreateClient();
 
             // URL для API
-            string anime = $"https://api.kinopoisk.dev/v1.3/movie?type=anime&page={page}&limit={pageSize}";
+            string anime = $"https://api.kinopoisk.dev/v1.3/movie?externalId.kpHD={externalId}";
+
 
             try
             {
@@ -43,30 +41,16 @@ namespace practice.Controllers
                     Root root = JsonSerializer.Deserialize<Root>(jsonResponse);
 
                     // Используйте информацию о пагинации, которая уже приходит с сервиса
-                    var totalPages = root.pages;
-
-                    // Проверьте, чтобы текущая страница не превышала общее количество страниц
-                    if (page < 1)
-                    {
-                        page = 1;
-                    }
-                    else if (page > totalPages)
-                    {
-                        page = (int)totalPages;
-                    }
-
-                    // Выполните пагинацию данных
                     var movies = root.docs.ToList();
 
                     // Создайте объект ViewModel и передайте его в представление
                     var viewModel = new MovieViewModel
                     {
                         Movies = movies,
-                        CurrentPage = page,
-                        TotalPages = (int)totalPages,
-                        ItemsPerPage = pageSize
+                        CurrentPage = 0,
+                        TotalPages = 1,
+                        ItemsPerPage = 1
                     };
-
                     return View(viewModel);
                 }
                 else
@@ -83,7 +67,6 @@ namespace practice.Controllers
                 return Content($"Ошибка HTTP-запроса: {e.Message}");
             }
         }
-
-
     }
+
 }
