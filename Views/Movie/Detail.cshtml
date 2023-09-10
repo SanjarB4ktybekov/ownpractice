@@ -6,49 +6,94 @@
     <div class="film-card">
         <div class="film-details">
             <h2>@movie.name</h2>
-            
-            <!-- Центрирование постера и рейтинга КиноПоиска -->
+            <!-- Добавьте другие детали фильма здесь -->
             <div class="film-details-content">
-                <img src="@movie.poster.url" alt="@movie.name" class="img-fluid" />
-                <p>Рейтинг КиноПоиска: @movie.rating.kp</p>
+                @if (movie.poster != null && !string.IsNullOrEmpty(movie.poster.url))
+                {
+                    <img src="@movie.poster.url" alt="@movie.name" class="img-fluid" />
+                }
+                <div class="section">
+                    <h3>Рейтинги:</h3>
+                    <ul>
+                        <li>КиноПоиск: @movie.rating.kp</li>
+                        @if (movie.rating.imdb.HasValue)
+                        {
+                            <li>IMDb: @movie.rating.imdb</li>
+                        }
+                        @if (movie.rating.filmCritics.HasValue)
+                        {
+                            <li>Рейтинг критиков: @movie.rating.filmCritics</li>
+                        }
+                        @if (movie.rating.russianFilmCritics.HasValue)
+                        {
+                            <li>Рейтинг российских критиков: @movie.rating.russianFilmCritics</li>
+                        }
+                    </ul>
+                </div>
+                <div class="section">
+                    <h2>Описание:</h2>
+                    <p>@movie.description</p>
+                </div>
+                <div class="section">
+                    <h3>Год:</h3>
+                    <p>@movie.year</p>
+                </div>
+                <div class="section">
+                    <h3>Продолжительность:</h3>
+                    <p>@movie.movieLength минут</p>
+                </div>
+                <div class="section">
+                    <h3>Тип:</h3>
+                    <p>@movie.type</p>
+                </div>
+                <div class="section">
+                    <h3>Жанры:</h3>
+                    <ul>
+                        @if (movie.genres != null)
+                        {
+                            @foreach (var genre in movie.genres)
+                            {
+                                <li>@genre.name</li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="section">
+                    <h3>Страна:</h3>
+                    <ul>
+                        @if (movie.countries != null)
+                        {
+                            @foreach (var country in movie.countries)
+                            {
+                                <li>@country.name</li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="section">
+                    <h3>Альтернативные названия:</h3>
+                    <ul>
+                        @if (movie.names != null)
+                        {
+                            @foreach (var name in movie.names)
+                            {
+                                <li>@name.name</li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="section">
+                    <h3>Краткое описание:</h3>
+                    <p>@movie.shortDescription</p>
+                </div>
             </div>
-            <!-- Другие детали фильма -->
         </div>
     </div>
+    <style>
+        .section {
+            border: 2px solid #000;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
 }
-
-
-<style>
-   /* Стили для карточки фильма */
-.film-card {
-    border: 3px solid #000000;
-    padding: 10px;
-    margin: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    background-color: rgb(220, 185, 45);
-}
-
-/* Центрирование всей информации о фильме */
-.film-details {
-    text-align: center;
-    max-width: 400px; /* Ширина блока с информацией, чтобы не было слишком широко */
-    margin: 0 auto;
-}
-
-/* Центрирование постера и рейтинга КиноПоиска */
-.film-details-content {
-    text-align: center;
-}
-
-/* Стили для постера */
-.film-details img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Стили для рейтинга КиноПоиска */
-.film-details p {
-    font-weight: bold;
-}
-
-</style>
